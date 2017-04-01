@@ -20,6 +20,6 @@ node {
     }
 
     stage('building docker image') {
-        sh "docker push ainguyen/gsite-micro-customer"
+        sh "./gradlew clean bootRepackage -Pprod buildDocker"
     }
 }
