@@ -1,4 +1,4 @@
-node {
+node("docker") {
     stage('checkout') {
         checkout scm
     }
@@ -17,5 +17,9 @@ node {
 
     stage('packaging') {
         sh "./gradlew bootRepackage -Pprod -x test"
+    }
+
+    stage('building docker image') {
+        sh "docker push ainguyen/gsite-micro-customer"
     }
 }
