@@ -26,4 +26,8 @@ node {
     stage('pushing') {
         sh "sudo docker push ainguyen/gsite-micro-customer"
     }
+
+     stage('updating service') {
+        sh "sudo docker service update gscloud_gsite-customer"
+    }
 }
