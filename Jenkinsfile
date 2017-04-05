@@ -16,6 +16,10 @@ node {
     }
 
     stage('packaging') {
-        sh "./gradlew bootRepackage -Pprod -x test"
+        sh "./gradlew clean bootRepackage -Pprod -x test"
+    }
+
+    stage('imaging') {
+        sh "./gradlew bootRepackage -Pprod buildDocker"
     }
 }
