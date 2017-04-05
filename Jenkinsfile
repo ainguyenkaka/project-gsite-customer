@@ -24,7 +24,8 @@ node {
     }
 
     stage('pushing') {
-        sh "sudo docker push ainguyen/gsite-micro-customer"
+        sh "sudo docker tag ainguyen/gsite-micro-customer localhost:5000/gsite-micro-customer"
+        sh "sudo docker push localhost:5000/gsite-micro-customer"
     }
 
      stage('updating service') {
