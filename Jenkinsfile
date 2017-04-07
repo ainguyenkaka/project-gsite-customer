@@ -20,15 +20,12 @@ node {
     }
 
     stage('imaging') {
-        sh "./gradlew bootRepackage -Pprod buildDocker"
+        sh "sudo docker image build -f build/docker/Dockerfile -t ainguyen/gsite-micro-customer build/docker/"
     }
 
-    stage('pushing') {
-        sh "sudo docker tag ainguyen/gsite-micro-customer localhost:5000/gsite-micro-customer"
-        sh "sudo docker push localhost:5000/gsite-micro-customer"
+    stage('pushing image') {
+        sh "sudo docker tag ainguyen/gsite-micro-customer gsite.cf/gsite-micro-customer"
+        sh "sudo docker push gsite.cf/gsite-micro-customer"
     }
 
-     stage('updating service') {
-        sh "sudo docker service update gscloud_gsite-customer"
-    }
 }

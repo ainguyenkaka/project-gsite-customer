@@ -134,7 +134,7 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'http://repo.maven.apache.org/maven2' }
     maven {
-        url "https://github.com/ainguyenkaka/gsite/raw/master"
+        url "https://github.com/ainguyenkaka/gsite-jpa/raw/master"
     }
 }
 

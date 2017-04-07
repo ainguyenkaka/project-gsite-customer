@@ -16,6 +16,6 @@ task buildDocker(type: Exec) {
     if (OperatingSystem.current().isWindows()) {
         commandLine 'cmd', '/c', 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', 'ainguyen/gsite-micro-customer', 'build/docker/'
     } else {
-        commandLine 'sudo','docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', 'ainguyen/gsite-micro-customer', 'build/docker/'
+        commandLine 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', 'ainguyen/gsite-micro-customer', 'build/docker/'
     }
 }
