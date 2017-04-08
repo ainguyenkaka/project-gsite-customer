@@ -1,7 +1,6 @@
 ######################
 # Project Specific
 ######################
-!build/docker
 /build/www/**
 /src/test/javascript/coverage/
 /src/test/javascript/PhantomJS*/
@@ -77,6 +76,7 @@ local.properties
 ######################
 .gradle/
 /build/
+!build/docker
 
 ######################
 # Package Files
