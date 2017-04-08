@@ -20,12 +20,12 @@ node {
     }
 
     stage('imaging') {
-        sh "sudo docker image build -f build/docker/Dockerfile -t ainguyen/gsite-micro-customer build/docker/"
+        sh "docker image build -f build/docker/Dockerfile -t ainguyen/gsite-micro-customer build/docker/"
     }
 
     stage('pushing image') {
-        sh "sudo docker tag ainguyen/gsite-micro-customer gsite.cf/gsite-micro-customer"
-        sh "sudo docker push gsite.cf/gsite-micro-customer"
+        sh "docker tag ainguyen/gsite-micro-customer gsite.cf/gsite-micro-customer"
+        sh "docker push gsite.cf/gsite-micro-customer"
     }
 
 }
