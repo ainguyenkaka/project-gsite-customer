@@ -75,14 +75,13 @@ local.properties
 # Gradle
 ######################
 .gradle/
-/build/*
-!/build/docker
+/build/
 
 ######################
 # Package Files
 ######################
 *.jar
-*.original
+*.war
 *.ear
 *.db
 

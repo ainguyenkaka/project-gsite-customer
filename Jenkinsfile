@@ -14,17 +14,23 @@ pipeline {
         }
         
         stage('build') {
+        steps {
+            parallel(
+            "build": {
+                sh './gradlew build -Pprod'
+                
+            },
+            "test": {
+                sh './gradlew test'
+                
+            }
+            )
+        }
+        }
+
+        stage('imaging') {
             steps {
-                parallel(
-                "build": {
-                    sh './gradlew build -Pprod'
-                    sh "docker build -t ainguyen/gsite-micro-customer ./build/docker"
-                },
-                "test": {
-                    sh './gradlew test'
-                    
-                }
-                )
+                 sh "./gradlew bootRepackage -Pprod buildDocker"
             }
         }
 
