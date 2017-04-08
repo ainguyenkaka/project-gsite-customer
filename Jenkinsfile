@@ -14,9 +14,20 @@ node {
             throw err
         }
     }
-
-    stage('packaging') {
-        sh "./gradlew bootRepackage -Pprod -x test"
+    
+    stage('build') {
+      steps {
+        parallel(
+          "build": {
+            sh './gradlew build -Pprod'
+            
+          },
+          "test": {
+            sh './gradlew test'
+            
+          }
+        )
+      }
     }
 
     stage('imaging') {
