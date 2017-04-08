@@ -20,7 +20,7 @@ node {
     }
 
     stage('imaging') {
-        sh "docker build -f build/docker/Dockerfile -t ainguyen/gsite-micro-customer"
+        sh "docker build -t ainguyen/gsite-micro-customer build/docker/"
     }
 
     stage('pushing image') {
