@@ -30,7 +30,7 @@ pipeline {
 
         stage('imaging') {
             steps {
-                sh "docker build -t ainguyen/gsite-micro-customer build/docker/"
+                sh "docker build -t ainguyen/gsite-micro-customer /build/docker/"
             }
         }
 
