@@ -13,7 +13,7 @@ management:
     context-path: /management
     health:
         mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
+            enabled: true
 spring:
     application:
         name: gsiteCustomer
@@ -38,7 +38,7 @@ server:
 
 info:
     project:
-        version: #project.version#
+        version: 1.0
 
 payment:
     paypal:
@@ -51,25 +51,13 @@ payment:
 storage:
     url:
         image: /
-# ===================================================================
-# JHipster specific properties
-#
-# Full reference is available at: https://jhipster.github.io/common-application-properties/
-# ===================================================================
 
 jhipster:
     async:
         core-pool-size: 2
         max-pool-size: 50
         queue-capacity: 10000
-    # By default CORS is disabled. Uncomment to enable.
-    #cors:
-        #allowed-origins: "*"
-        #allowed-methods: GET, PUT, POST, DELETE, OPTIONS
-        #allowed-headers: "*"
-        #exposed-headers:
-        #allow-credentials: true
-        #max-age: 1800
+
     mail:
         from: gsiteCustomer@localhost
     swagger:
@@ -85,14 +73,5 @@ jhipster:
         license-url:
     ribbon:
         display-on-active-profiles: dev
-
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://jhipster.github.io/common-application-properties/
-# ===================================================================
 
 application:
