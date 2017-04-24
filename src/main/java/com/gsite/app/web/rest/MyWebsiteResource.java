@@ -97,12 +97,12 @@ public class MyWebsiteResource {
         if (template != null)
             return template.getPrice().equals(BigDecimal.ZERO);
         else
-            return false;
+            return true;
     }
 
     @DeleteMapping("/mywebsites/delete")
     @Timed
-    public ResponseEntity<Void> deleteWebsite(@ApiParam String webId) {
+    public ResponseEntity<Website> deleteWebsite(@ApiParam String webId) {
         log.debug("REST request to delete Website : {}", webId);
         websiteService.delete(webId);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("website", webId.toString())).build();
