@@ -1,9 +1,9 @@
 package com.gsite.app.web.rest;
 
 import com.gsite.app.GsiteCustomerApp;
-import com.gsite.app.domain.Feedback;
-import com.gsite.app.repository.FeedbackRepository;
-import com.gsite.app.service.FeedbackService;
+import com.gsite.app.domain.Notification;
+import com.gsite.app.repository.NotificationRepository;
+import com.gsite.app.service.NotificationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,15 +20,17 @@ import javax.inject.Inject;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static com.gsite.app.web.rest.TestUtil.sameInstant;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GsiteCustomerApp.class)
-public class MyFeedbackResourceTest {
+public class MyNotificationResourceInitTest {
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
@@ -38,55 +40,69 @@ public class MyFeedbackResourceTest {
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
 
     @Inject
-    private FeedbackRepository feedbackRepository;
+    private NotificationRepository notificationRepository;
 
     @Inject
-    private FeedbackService feedbackService;
+    private NotificationService notificationService;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    private MockMvc restFeedbackMockMvc;
+    private MockMvc restNotificationMockMvc;
 
-    private Feedback feedback;
+    private Notification notification;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        MyFeedbackResource myFeedbackResource = new MyFeedbackResource();
-        ReflectionTestUtils.setField(myFeedbackResource, "feedbackService", feedbackService);
-        this.restFeedbackMockMvc = MockMvcBuilders.standaloneSetup(myFeedbackResource)
+        MyNotificationResource myNotificationResource = new MyNotificationResource(notificationService);
+        ReflectionTestUtils.setField(myNotificationResource, "notificationService", notificationService);
+        this.restNotificationMockMvc = MockMvcBuilders.standaloneSetup(myNotificationResource)
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
 
-    public static Feedback createEntity() {
-        Feedback feedback = new Feedback()
+    public static Notification createEntity() {
+        Notification notification = new Notification()
             .title(DEFAULT_TITLE)
             .content(DEFAULT_CONTENT)
-            .created(DEFAULT_CREATED)
-            .user_id(DEFAULT_USER_ID);
-        return feedback;
+            .created(DEFAULT_CREATED);
+        notification.getSentUsers().add(DEFAULT_USER_ID);
+        return notification;
     }
 
     @Before
     public void initTest() {
-        feedbackRepository.deleteAll();
-        feedback = createEntity();
+        notificationRepository.deleteAll();
+        notification = createEntity();
     }
 
     @Test
-    public void getMyFeedbacks() throws Exception {
-        feedbackRepository.save(feedback);
+    public void getMyNotifications() throws Exception {
+        notificationRepository.save(notification);
 
-        restFeedbackMockMvc.perform(get("/api/myfeedbacks").param("userId", DEFAULT_USER_ID))
+        restNotificationMockMvc.perform(get("/api/mynotifications").param("userId", DEFAULT_USER_ID))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(feedback.getId())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(notification.getId())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))))
-            .andExpect(jsonPath("$.[*].user_id").value(hasItem(DEFAULT_USER_ID.toString())));
+            .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))));
+    }
+
+
+    @Test
+    public void deleteNotification() throws Exception {
+        notificationService.save(notification);
+
+        int databaseSizeBeforeDelete = notificationRepository.findAll().size();
+
+        restNotificationMockMvc.perform(delete("/api/mynotifications/{id}", notification.getId())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+
+        List<Notification> notificationList = notificationRepository.findAll();
+        assertThat(notificationList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
 }

@@ -27,8 +27,7 @@ spring:
 server:
     port: 8081
 
-
-jhipster:
+application:
     http:
         version: V_1_1
     security:
@@ -61,6 +60,3 @@ jhipster:
             queue-size: 512
         spectator-metrics:
             enabled: false
-
-
-application:

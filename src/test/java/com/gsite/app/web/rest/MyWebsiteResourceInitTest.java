@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GsiteCustomerApp.class)
-public class MyWebsiteResourceTest {
+public class MyWebsiteResourceInitTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String DEFAULT_TEMPLATE_ID = "AAAAAAAAAA";
@@ -101,6 +101,20 @@ public class MyWebsiteResourceTest {
             .andExpect(jsonPath("$.[*].domain").value(hasItem(DEFAULT_DOMAIN.toString())));
     }
 
+    @Test
+    public void getWebsite() throws Exception {
+        websiteRepository.save(website);
+
+        restWebsiteMockMvc.perform(get("/api/mywebsites/{id}", website.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.id").value(website.getId()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.created").value(sameInstant(DEFAULT_CREATED)))
+            .andExpect(jsonPath("$.user_id").value(DEFAULT_USER_ID.toString()))
+            .andExpect(jsonPath("$.template").value(DEFAULT_TEMPLATE_ID.toString()))
+            .andExpect(jsonPath("$.domain").value(DEFAULT_DOMAIN.toString()));
+    }
 
     @Test
     public void getMyUnpaidWebsites() throws Exception {

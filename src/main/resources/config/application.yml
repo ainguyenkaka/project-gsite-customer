@@ -52,7 +52,7 @@ storage:
     url:
         image: /
 
-jhipster:
+application:
     async:
         core-pool-size: 2
         max-pool-size: 50
@@ -73,5 +73,3 @@ jhipster:
         license-url:
     ribbon:
         display-on-active-profiles: dev
-
-application:

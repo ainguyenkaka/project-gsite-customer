@@ -20,15 +20,18 @@ import javax.inject.Inject;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static com.gsite.app.web.rest.TestUtil.sameInstant;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GsiteCustomerApp.class)
-public class MyQuestionResourceTest {
+public class MyQuestionResourceInitTest {
 
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
 
@@ -88,6 +91,26 @@ public class MyQuestionResourceTest {
             .andExpect(jsonPath("$.[*].answer").value(hasItem(DEFAULT_ANSWER.toString())))
             .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))))
             .andExpect(jsonPath("$.[*].user_id").value(hasItem(DEFAULT_USER_ID.toString())));
+    }
+
+
+    @Test
+    public void createQuestion() throws Exception {
+        int databaseSizeBeforeCreate = questionRepository.findAll().size();
+
+
+        restQuestionMockMvc.perform(post("/api/myquestions")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(question)))
+            .andExpect(status().isCreated());
+
+        List<Question> questionList = questionRepository.findAll();
+        assertThat(questionList).hasSize(databaseSizeBeforeCreate + 1);
+        Question testQuestion = questionList.get(questionList.size() - 1);
+        assertThat(testQuestion.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testQuestion.getAnswer()).isEqualTo(DEFAULT_ANSWER);
+        assertThat(testQuestion.getCreated()).isEqualTo(DEFAULT_CREATED);
+        assertThat(testQuestion.getUser_id()).isEqualTo(DEFAULT_USER_ID);
     }
 
 }

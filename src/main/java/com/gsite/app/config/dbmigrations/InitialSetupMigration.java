@@ -11,8 +11,8 @@ import java.util.Date;
 @ChangeLog(order = "001")
 public class InitialSetupMigration {
 
-    @ChangeSet(author = "initiator", id = "01-addWebsites", order = "01")
-    public void addTemplates(DB db) {
+    @ChangeSet(author = "initiator", id = "01-addMoreWebsites", order = "01")
+    public void addWebsites(DB db) {
         DBCollection templateCollection = db.getCollection("website");
         templateCollection.createIndex("name");
         templateCollection.insert(BasicDBObjectBuilder

@@ -1,16 +1,15 @@
 package com.gsite.app.web.rest;
 
+import com.codahale.metrics.annotation.Timed;
 import com.gsite.app.domain.Notification;
 import com.gsite.app.service.NotificationService;
-import com.codahale.metrics.annotation.Timed;
+import com.gsite.app.web.rest.util.HeaderUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -35,6 +34,14 @@ public class MyNotificationResource {
         log.debug("REST request to get a page of Notifications by user: {}" ,userId);
         List<Notification> list = notificationService.findAllBySentUser(userId);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/mynotifications/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteNotification(@PathVariable String id) {
+        log.debug("REST request to delete Notification : {}", id);
+        notificationService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("notification", id.toString())).build();
     }
 
 }

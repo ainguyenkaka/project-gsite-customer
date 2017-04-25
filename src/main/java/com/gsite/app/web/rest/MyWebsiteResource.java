@@ -48,7 +48,17 @@ public class MyWebsiteResource {
         return websites;
     }
 
-
+    @GetMapping("/mywebsites/{id}")
+    @Timed
+    public ResponseEntity<Website> getWebsite(@PathVariable String id) {
+        log.debug("REST request to get user's id Website : {}", id);
+        Website website = websiteService.findOne(id);
+        return Optional.ofNullable(website)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @GetMapping("/mywebsites/share")
     @Timed
@@ -63,7 +73,7 @@ public class MyWebsiteResource {
     public ResponseEntity<Website> createMyWebsite(@Valid @RequestBody Website website) throws URISyntaxException {
 
         if(websiteService.findOneByDomain(website.getDomain()) != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(website);
         }
         if (!isTemplateFree(website.getTemplate())) {
             Website result = websiteService.save(website);
@@ -102,10 +112,10 @@ public class MyWebsiteResource {
 
     @DeleteMapping("/mywebsites/delete")
     @Timed
-    public ResponseEntity<Website> deleteWebsite(@ApiParam String webId) {
-        log.debug("REST request to delete Website : {}", webId);
-        websiteService.delete(webId);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("website", webId.toString())).build();
+    public ResponseEntity<Website> deleteWebsite(@ApiParam String id) {
+        log.debug("REST request to delete Website : {}", id);
+        websiteService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("website", id.toString())).build();
     }
 
 

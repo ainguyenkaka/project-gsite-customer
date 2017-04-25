@@ -38,7 +38,7 @@ payment:
         cancelUrl: http://localhost:9000/website-payment/
         returnUrl: http://localhost:9000/website-payment/
 
-jhipster:
+application:
     async:
         core-pool-size: 2
         max-pool-size: 50
@@ -50,5 +50,3 @@ jhipster:
                 token-validity-in-seconds: 86400
     metrics:
         jmx.enabled: true
-
-application:

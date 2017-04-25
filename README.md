@@ -9,22 +9,27 @@ Please visit GSite on cloud: https://gsite.cf
     
     ./gradlew bootRun
 
+### Testing
 ##### Test app
-
+ 
     ./gradlew test
     
 ### Production
 ##### Prerequisites:
 - Have running MongoDB server on localhost:27017
 
+##### Packaging
+    
+    ./gradlew -Pprod bootRepackage
 ##### Run app
     
-    ./gradlew bootRun -Pprod
+    ./build/libs/gsite-customer-1.0.war
+or
 
-##### Test app
+    java -jar build/libs/gsite-customer-1.0.war
 
 
-### Docker
+### Production with Docker
 ##### Prerequisites:
 - Install Docker Engine (Daemon). To check Docker run:
     
@@ -52,7 +57,7 @@ or
    
      http://{IP or host}:8081
 
-Get public token from logs:
+Get public customer token from logs:
     
     ./gradlew -Dtest.single=TokenProvider test -i
 
