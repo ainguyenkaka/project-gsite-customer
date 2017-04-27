@@ -24,7 +24,6 @@ import java.util.Collection;
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({ApplicationProperties.class})
-@EnableCircuitBreaker
 public class GsiteCustomerApp {
 
     private static final Logger log = LoggerFactory.getLogger(GsiteCustomerApp.class);

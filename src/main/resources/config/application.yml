@@ -14,6 +14,7 @@ management:
     health:
         mail:
             enabled: true
+
 spring:
     application:
         name: gsiteCustomer
@@ -26,6 +27,8 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+    cache:
+        type: hazelcast
 
 security:
     basic:
@@ -73,3 +76,7 @@ application:
         license-url:
     ribbon:
         display-on-active-profiles: dev
+    cache:
+        hazelcast:
+            group-name: name
+            group-pass: pass
