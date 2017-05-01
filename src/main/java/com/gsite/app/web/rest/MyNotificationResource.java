@@ -29,18 +29,18 @@ public class MyNotificationResource {
 
     @GetMapping("/mynotifications")
     @Timed
-    public ResponseEntity<List<Notification>> getAllNotificationsByUserId(@ApiParam String userId)
+    public ResponseEntity<List<Notification>> getAllNotificationsByUserEmail(@ApiParam String userEmail)
         throws URISyntaxException {
-        log.debug("REST request to get a page of Notifications by user: {}" ,userId);
-        List<Notification> list = notificationService.findAllBySentUser(userId);
+        log.debug("REST request to get a page of Notifications by user: {}" ,userEmail);
+        List<Notification> list = notificationService.findAllBySentUser(userEmail);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @DeleteMapping("/mynotifications/{id}")
+    @DeleteMapping("/mynotifications")
     @Timed
-    public ResponseEntity<Void> deleteNotification(@PathVariable String id) {
+    public ResponseEntity<String> deleteNotification( @ApiParam String id, @ApiParam String userEmail) {
         log.debug("REST request to delete Notification : {}", id);
-        notificationService.delete(id);
+        notificationService.deleteUser(id,userEmail);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("notification", id.toString())).build();
     }
 

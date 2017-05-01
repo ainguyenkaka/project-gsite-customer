@@ -6,42 +6,44 @@ import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @ChangeLog(order = "001")
 public class InitialSetupMigration {
 
-    @ChangeSet(author = "initiator", id = "01-addMoreWebsites", order = "01")
-    public void addWebsites(DB db) {
-        DBCollection templateCollection = db.getCollection("website");
-        templateCollection.createIndex("name");
+    @ChangeSet(author = "initiator", id = "01-addNotifications", order = "02")
+    public void addNotifications(DB db) {
+        DBCollection templateCollection = db.getCollection("notification");
+        templateCollection.createIndex("title");
+        List<String> sentUsers = new ArrayList<>();
+        sentUsers.add("user@localhost.com");
         templateCollection.insert(BasicDBObjectBuilder
-            .start("_id", "website-1")
-            .add("name", "The basic one")
-            .add("template", "basic-template")
-            .add("domain", "webone")
-            .add("user_id", "user-1")
-            .add("is_paid", true)
+            .start("_id", "notification-1")
+            .add("title", "GSite Beta!")
+            .add("content", "GSite is still in Beta. Have fun and please give us feedbacks.")
+            .add("is_read", false)
+            .add("sent_users", sentUsers)
             .add("created", new Date())
             .get());
         templateCollection.insert(BasicDBObjectBuilder
-            .start("_id", "website-2")
-            .add("name", "The latest one")
-            .add("template", "latest-template")
-            .add("domain", "webtwo")
-            .add("user_id", "user-1")
-            .add("is_paid", true)
+            .start("_id", "notification-2")
+            .add("title", "New templates!")
+            .add("content", "GSite just releases free templates.")
+            .add("is_read", false)
+            .add("sent_users", sentUsers)
             .add("created", new Date())
             .get());
         templateCollection.insert(BasicDBObjectBuilder
-            .start("_id", "website-3")
-            .add("name", "The beauty")
-            .add("template", "beautiful-template")
-            .add("domain", "webthree")
-            .add("user_id", "user-1")
-            .add("is_paid", true)
+            .start("_id", "notification-3")
+            .add("title", "More custom options!")
+            .add("content", "GSite just provides more custom options for user's websites.")
+            .add("is_read", false)
+            .add("sent_users", sentUsers)
             .add("created", new Date())
             .get());
+
 
     }
 }

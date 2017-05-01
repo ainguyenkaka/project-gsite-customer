@@ -17,11 +17,14 @@ public class PayPalAPI {
     private final Logger log = LoggerFactory.getLogger(PayPalAPI.class);
 
     private APIContext apiContext;
-    private RedirectUrls redirectUrls;
+    private String cancelUrl;
 
-    public PayPalAPI(APIContext apiContext, RedirectUrls redirectUrls) {
+    private String returnUrl;
+
+    public PayPalAPI(APIContext apiContext, String cancelUrl, String returnUrl) {
         this.apiContext = apiContext;
-        this.redirectUrls = redirectUrls;
+        this.cancelUrl = cancelUrl;
+        this.returnUrl = returnUrl;
     }
 
     public Payment createWebsitePayment(Website website, WebTemplate template) {
@@ -92,10 +95,11 @@ public class PayPalAPI {
         payment.setTransactions(transactions);
 
         // ###Redirect URLs
-        String cancelUrl = redirectUrls.getCancelUrl() + website.getId();
-        String returnUrl = redirectUrls.getReturnUrl() + website.getId();
-        redirectUrls.setCancelUrl(cancelUrl);
-        redirectUrls.setReturnUrl(returnUrl);
+        String cancelURL = cancelUrl + website.getId();
+        String returnURL = returnUrl + website.getId();
+        RedirectUrls redirectUrls = new RedirectUrls();
+        redirectUrls.setCancelUrl(cancelURL);
+        redirectUrls.setReturnUrl(returnURL);
         payment.setRedirectUrls(redirectUrls);
 
         try {

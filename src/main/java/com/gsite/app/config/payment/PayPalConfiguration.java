@@ -24,9 +24,7 @@ public class PayPalConfiguration {
 
         String cancelUrl = environment.getProperty("payment.paypal.cancelUrl");
         String returnUrl = environment.getProperty("payment.paypal.returnUrl");
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(cancelUrl);
-        redirectUrls.setReturnUrl(returnUrl);
-        return new PayPalAPI(apiContext,redirectUrls);
+
+        return new PayPalAPI(apiContext,cancelUrl,returnUrl);
     }
 }
