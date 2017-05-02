@@ -48,6 +48,8 @@ payment:
         mode: sandbox
         clientId: AdkvG3h4tvfBNJBihi9KnccOdROGu_W8AgZEcWcfkyV4H1fxHBA7ewcApiYITAcvUuK19mdlBCUMridu
         clientSecret: EFp1Xx_TteLv48GnOB25Azm-Ts8_9lpqCaXQ5HytqElxi_jUQu_b_Qn194XwX8E9eNcCWcXvMQ5WOJck
+        cancelUrl: http://localhost:8080/website-payment/
+        returnUrl: http://localhost:8080/website-payment/
 
 storage:
     url:
@@ -78,3 +80,5 @@ application:
         hazelcast:
             group-name: name
             group-pass: pass
+            network:
+                address: 127.0.0.1
