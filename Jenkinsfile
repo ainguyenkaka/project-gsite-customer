@@ -33,7 +33,7 @@ node {
     stage('build docker') {
         sh "cp -R src/main/docker build/"
         sh "cp build/libs/*.war build/docker/"
-        sh "sudo docker build -t ainguyen/gsite-micro-customer build/docker"
+        dockerImage = docker.build('ainguyen/gsite-micro-customer', 'build/docker')
     }
 
     stage('publish docker') {
