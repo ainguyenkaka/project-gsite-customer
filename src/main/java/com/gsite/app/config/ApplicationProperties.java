@@ -159,9 +159,9 @@ public class ApplicationProperties {
 
             private int backupCount = 1;
 
-            private String groupName = "gname";
+            private String groupName = "name";
 
-            private String groupPass = "gpass";
+            private String groupPass = "pass";
 
             public int getTimeToLiveSeconds() {
                 return timeToLiveSeconds;
