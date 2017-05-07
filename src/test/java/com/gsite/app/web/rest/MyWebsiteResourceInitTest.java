@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -42,16 +43,16 @@ public class MyWebsiteResourceInitTest {
     private static final String DEFAULT_DOMAIN = "AAAAAAAAAA";
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
 
-    @Inject
+    @Autowired
     private WebsiteRepository websiteRepository;
 
-    @Inject
+    @Autowired
     private WebsiteService websiteService;
 
-    @Inject
+    @Autowired
     private WebTemplateService templateService;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restWebsiteMockMvc;

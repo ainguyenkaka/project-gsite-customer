@@ -2,6 +2,7 @@ package com.gsite.app.config.payment;
 
 import com.paypal.api.payments.RedirectUrls;
 import com.paypal.base.rest.APIContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -12,7 +13,7 @@ import javax.inject.Inject;
 public class PayPalConfiguration {
 
 
-    @Inject
+    @Autowired
     Environment environment;
 
     @Bean

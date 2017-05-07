@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -39,13 +40,13 @@ public class MyNotificationResourceInitTest {
 
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
 
-    @Inject
+    @Autowired
     private NotificationRepository notificationRepository;
 
-    @Inject
+    @Autowired
     private NotificationService notificationService;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restNotificationMockMvc;

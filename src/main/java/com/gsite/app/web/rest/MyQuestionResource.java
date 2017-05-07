@@ -7,6 +7,7 @@ import com.gsite.app.web.rest.util.HeaderUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class MyQuestionResource {
 
     private final Logger log = LoggerFactory.getLogger(MyQuestionResource.class);
 
-    @Inject
+    @Autowired
     private QuestionService questionService;
 
     @GetMapping("/myquestions")

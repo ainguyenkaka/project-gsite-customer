@@ -8,6 +8,7 @@ import com.paypal.api.payments.CreditCard;
 import com.paypal.api.payments.Payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -17,13 +18,13 @@ public class WebsitePaymentService {
 
     private final Logger log = LoggerFactory.getLogger(WebsitePaymentService.class);
 
-    @Inject
+    @Autowired
     private PayPalAPI payPalAPI;
 
-    @Inject
+    @Autowired
     private WebTemplateService webTemplateService;
 
-    @Inject
+    @Autowired
     private WebsiteService websiteService;
 
     public WebsitePaymentService() {
