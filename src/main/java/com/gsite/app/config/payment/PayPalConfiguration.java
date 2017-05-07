@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class PayPalConfiguration {
 
 
-    @Autowired
+    @Inject
     Environment environment;
 
     @Bean

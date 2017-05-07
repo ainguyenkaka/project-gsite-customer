@@ -43,16 +43,16 @@ public class MyWebsiteResourceInitTest {
     private static final String DEFAULT_DOMAIN = "AAAAAAAAAA";
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
 
-    @Autowired
+    @Inject
     private WebsiteRepository websiteRepository;
 
-    @Autowired
+    @Inject
     private WebsiteService websiteService;
 
-    @Autowired
+    @Inject
     private WebTemplateService templateService;
 
-    @Autowired
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restWebsiteMockMvc;

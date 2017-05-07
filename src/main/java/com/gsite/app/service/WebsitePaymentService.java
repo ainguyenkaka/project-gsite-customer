@@ -18,13 +18,13 @@ public class WebsitePaymentService {
 
     private final Logger log = LoggerFactory.getLogger(WebsitePaymentService.class);
 
-    @Autowired
+    @Inject
     private PayPalAPI payPalAPI;
 
-    @Autowired
+    @Inject
     private WebTemplateService webTemplateService;
 
-    @Autowired
+    @Inject
     private WebsiteService websiteService;
 
     public WebsitePaymentService() {

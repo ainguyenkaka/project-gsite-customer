@@ -42,13 +42,13 @@ public class MyQuestionResourceInitTest {
 
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
 
-    @Autowired
+    @Inject
     private QuestionRepository questionRepository;
 
-    @Autowired
+    @Inject
     private QuestionService questionService;
 
-    @Autowired
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restQuestionMockMvc;

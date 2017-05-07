@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -26,9 +25,9 @@ import java.util.List;
 import static com.gsite.app.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GsiteCustomerApp.class)
 public class MyNotificationResourceInitTest {
@@ -38,15 +37,15 @@ public class MyNotificationResourceInitTest {
 
     private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
 
-    private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
+    private static final String DEFAULT_USER_EMAIL = "AAAAAAAAAA";
 
-    @Autowired
+    @Inject
     private NotificationRepository notificationRepository;
 
-    @Autowired
+    @Inject
     private NotificationService notificationService;
 
-    @Autowired
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restNotificationMockMvc;
@@ -68,7 +67,7 @@ public class MyNotificationResourceInitTest {
             .title(DEFAULT_TITLE)
             .content(DEFAULT_CONTENT)
             .created(DEFAULT_CREATED);
-        notification.getSentUsers().add(DEFAULT_USER_ID);
+        notification.getSentUsers().add(DEFAULT_USER_EMAIL);
         return notification;
     }
 
@@ -80,9 +79,9 @@ public class MyNotificationResourceInitTest {
 
     @Test
     public void getMyNotifications() throws Exception {
-        notificationRepository.save(notification);
+        notificationService.save(notification);
 
-        restNotificationMockMvc.perform(get("/api/mynotifications").param("userId", DEFAULT_USER_ID))
+        restNotificationMockMvc.perform(get("/api/mynotifications").param("userEmail", DEFAULT_USER_EMAIL))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(notification.getId())))
@@ -98,12 +97,14 @@ public class MyNotificationResourceInitTest {
 
         int databaseSizeBeforeDelete = notificationRepository.findAll().size();
 
-        restNotificationMockMvc.perform(delete("/api/mynotifications/{id}", notification.getId())
+        restNotificationMockMvc.perform(delete("/api/mynotifications")
+            .param("id",notification.getId())
+            .param("userEmail",DEFAULT_USER_EMAIL)
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
         List<Notification> notificationList = notificationRepository.findAll();
-        assertThat(notificationList).hasSize(databaseSizeBeforeDelete - 1);
+        assertThat(notificationList).hasSize(databaseSizeBeforeDelete);
     }
 
 }

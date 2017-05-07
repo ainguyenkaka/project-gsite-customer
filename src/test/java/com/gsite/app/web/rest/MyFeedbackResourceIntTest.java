@@ -41,13 +41,13 @@ public class MyFeedbackResourceIntTest {
 
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
 
-    @Autowired
+    @Inject
     private FeedbackRepository feedbackRepository;
 
-    @Autowired
+    @Inject
     private FeedbackService feedbackService;
 
-    @Autowired
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restFeedbackMockMvc;

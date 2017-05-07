@@ -27,10 +27,10 @@ import java.util.Optional;
 public class MyWebsiteResource {
     private final Logger log = LoggerFactory.getLogger(MyWebsiteResource.class);
 
-    @Autowired
+    @Inject
     private WebsiteService websiteService;
 
-    @Autowired
+    @Inject
     private WebTemplateService templateService;
 
     @GetMapping("/mywebsites")

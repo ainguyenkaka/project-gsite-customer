@@ -24,7 +24,7 @@ public class MyQuestionResource {
 
     private final Logger log = LoggerFactory.getLogger(MyQuestionResource.class);
 
-    @Autowired
+    @Inject
     private QuestionService questionService;
 
     @GetMapping("/myquestions")

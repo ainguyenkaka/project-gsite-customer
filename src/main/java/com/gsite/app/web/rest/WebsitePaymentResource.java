@@ -20,7 +20,7 @@ public class WebsitePaymentResource {
 
     private final Logger log = LoggerFactory.getLogger(WebsitePaymentResource.class);
 
-    @Autowired
+    @Inject
     private WebsitePaymentService paymentService;
 
 

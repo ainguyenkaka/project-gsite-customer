@@ -24,7 +24,7 @@ public class MyFeedbackResource {
 
     private final Logger log = LoggerFactory.getLogger(MyFeedbackResource.class);
 
-    @Autowired
+    @Inject
     private FeedbackService feedbackService;
 
     @GetMapping("/myfeedbacks")
